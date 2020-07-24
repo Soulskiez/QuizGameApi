@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const path = require('path');
 const WebSocket = require('ws');
 
 const socketServer = new WebSocket.Server({port: 3030});
@@ -24,10 +23,6 @@ socketServer.on('connection', (socketClient) => {
         console.log('Number of clients: ', socketServer.clients.size);
     });
 });
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-  });
 
 const port = 8765;
 app.listen(port, () => {
