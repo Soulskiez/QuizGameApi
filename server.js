@@ -1,27 +1,10 @@
 const express = require('express');
 const app = express();
-const WebSocket = require('ws');
+const db = require('./db.js'); // importing the db config
 
-const socketServer = new WebSocket.Server({ port: 3030 });
-const messages = [ 'Start Chatting!' ];
-socketServer.on('connection', (socketClient) => {
-	console.log('connected');
-	console.log('Number of clients: ', socketServer.clients.size);
-	socketClient.send(JSON.stringify(messages));
-
-	socketClient.on('message', (message) => {
-		messages.push(message);
-		socketServer.clients.forEach((client) => {
-			if (client.readyState === WebSocket.OPEN) {
-				client.send(JSON.stringify([ message ]));
-			}
-		});
-	});
-
-	socketClient.on('close', (socketClient) => {
-		console.log('closed');
-		console.log('Number of clients: ', socketServer.clients.size);
-	});
+app.get('/quiz', async (req, res) => {
+	const quiz = await db('quiz'); // making a query to get all todos
+	res.json({ quiz });
 });
 
 const port = 8765;
