@@ -8,7 +8,7 @@ module.exports = {
 		return knex('quiz').where('name', name);
 	},
 	createQuiz(quiz) {
-		return knex('quiz').insert(quiz, 'name');
+		return knex('quiz').insert(quiz, '*');
 	},
 	updateQuiz(id, quiz) {
 		return knex('quiz').where('id', id).update(quiz, '*');
