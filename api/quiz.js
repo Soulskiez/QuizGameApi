@@ -6,7 +6,6 @@ const queries = require('../db/queries');
 
 const isValidQuiz = (quiz) => {
 	//When actual quiz data is in DB, fix this.
-	console.log('hit');
 	return quiz.name ? true : false;
 };
 
