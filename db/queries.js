@@ -15,5 +15,8 @@ module.exports = {
 	},
 	delete(id, tableName) {
 		return knex(tableName).where('id', id).del();
+	},
+	getByQuestionsByQuizId(quizId, tableName) {
+		return knex(tableName).where('quiz_id', quizId);
 	}
 };

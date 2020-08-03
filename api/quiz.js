@@ -16,9 +16,14 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res, next) => {
+	let quizWithQuestion;
 	queries.getById(req.params.id, 'quiz').then((quiz) => {
 		if (quiz) {
-			res.json(quiz);
+			quizWithQuestion = quiz[0];
+			queries.getByQuestionsByQuizId(req.params.id, 'question').then((questions) => {
+				quizWithQuestion.questions = questions;
+				res.json(quizWithQuestion);
+			});
 		} else {
 			next();
 		}
