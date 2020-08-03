@@ -2,10 +2,12 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const quizzes = require('./api/quiz');
+const questions = require('./api/question');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/quizzes', quizzes);
+app.use('/api/questions', questions);
 
 const port = 8765;
 app.use(function(req, res, next) {

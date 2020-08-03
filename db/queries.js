@@ -1,19 +1,19 @@
 const knex = require('./db');
 
 module.exports = {
-	getAll() {
-		return knex('quiz');
+	getAll(tableName) {
+		return knex(tableName);
 	},
-	getByName(name) {
-		return knex('quiz').where('name', name);
+	getByName(name, tableName) {
+		return knex(tableName).where('name', name);
 	},
-	createQuiz(quiz) {
-		return knex('quiz').insert(quiz, '*');
+	create(quiz, tableName) {
+		return knex(tableName).insert(quiz, '*');
 	},
-	updateQuiz(id, quiz) {
-		return knex('quiz').where('id', id).update(quiz, '*');
+	update(id, quiz, tableName) {
+		return knex(tableName).where('id', id).update(quiz, '*');
 	},
-	delete(id) {
-		return knex('quiz').where('id', id).del();
+	delete(id, tableName) {
+		return knex(tableName).where('id', id).del();
 	}
 };

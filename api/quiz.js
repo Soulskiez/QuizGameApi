@@ -10,13 +10,13 @@ const isValidQuiz = (quiz) => {
 };
 
 router.get('/', (req, res) => {
-	queries.getAll().then((quizzes) => {
+	queries.getAll('quiz').then((quizzes) => {
 		res.json(quizzes);
 	});
 });
 
 router.get('/:name', (req, res, next) => {
-	queries.getByName(req.params.name).then((quiz) => {
+	queries.getByName(req.params.name, 'quiz').then((quiz) => {
 		if (quiz) {
 			res.json(quiz);
 		} else {
@@ -27,7 +27,7 @@ router.get('/:name', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
 	if (isValidQuiz(req.body)) {
-		queries.createQuiz(req.body).then((quiz) => {
+		queries.create(req.body, 'quiz').then((quiz) => {
 			res.json(quiz[0]);
 		});
 	} else {
@@ -37,7 +37,7 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
 	try {
-		queries.updateQuiz(req.params.id, req.body).then((quiz) => {
+		queries.update(req.params.id, req.body, 'quiz').then((quiz) => {
 			res.json(quiz[0]);
 		});
 	} catch (e) {
@@ -46,7 +46,7 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-	queries.delete(req.params.id).then(() => {
+	queries.delete(req.params.id, 'quiz').then(() => {
 		res.json({
 			deleted: true
 		});
