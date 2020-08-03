@@ -15,19 +15,17 @@ router.get('/', (req, res) => {
 	});
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
 	let quizWithQuestion;
-	queries.getById(req.params.id, 'quiz').then((quiz) => {
-		if (quiz) {
-			quizWithQuestion = quiz[0];
-			queries.getByQuestionsByQuizId(req.params.id, 'question').then((questions) => {
-				quizWithQuestion.questions = questions;
-				res.json(quizWithQuestion);
-			});
-		} else {
-			next();
-		}
-	});
+	const quiz = await queries.getById(req.params.id, 'quiz');
+	if (quiz) {
+		const questions = await queries.getByQuestionsByQuizId(req.params.id, 'question');
+		quizWithQuestion = quiz[0];
+		quizWithQuestion.questions = questions;
+		res.json(quizWithQuestion);
+	} else {
+		next();
+	}
 });
 
 router.post('/', (req, res, next) => {
