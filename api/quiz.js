@@ -16,11 +16,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', async (req, res, next) => {
-	let quizWithQuestion;
 	const quiz = await queries.getById(req.params.id, 'quiz');
 	if (quiz) {
 		const questions = await queries.getByQuestionsByQuizId(req.params.id, 'question');
-		quizWithQuestion = quiz[0];
+		let quizWithQuestion = quiz[0];
 		quizWithQuestion.questions = questions;
 		res.json(quizWithQuestion);
 	} else {
