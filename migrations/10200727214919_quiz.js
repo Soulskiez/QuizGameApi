@@ -1,8 +1,8 @@
 exports.up = function(knex) {
-	return knex.schema.createTable('quiz', (table) => {
-		table.increments(); // this represents the primary key.
-		table.string('name').unique(); // this is a column.
-		table.string('description');
+	return knex.schema.createTable('quiz', (t) => {
+		t.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
+		t.string('name').notNullable(); // this is a column.
+		t.string('description');
 	});
 };
 exports.down = function(knex) {

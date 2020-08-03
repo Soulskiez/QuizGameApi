@@ -15,8 +15,8 @@ router.get('/', (req, res) => {
 	});
 });
 
-router.get('/:name', (req, res, next) => {
-	queries.getByName(req.params.name, 'quiz').then((quiz) => {
+router.get('/:id', (req, res, next) => {
+	queries.getById(req.params.id, 'quiz').then((quiz) => {
 		if (quiz) {
 			res.json(quiz);
 		} else {

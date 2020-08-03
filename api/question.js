@@ -6,7 +6,7 @@ const queries = require('../db/queries');
 
 const isValidQuestion = (question) => {
 	//When actual question data is in DB, fix this.
-	return question.name ? true : false;
+	return question.prompt ? true : false;
 };
 
 router.get('/', (req, res) => {
@@ -15,8 +15,8 @@ router.get('/', (req, res) => {
 	});
 });
 
-router.get('/:name', (req, res, next) => {
-	queries.getByName(req.params.name, 'question').then((question) => {
+router.get('/:id', (req, res, next) => {
+	queries.getById(req.params.id, 'question').then((question) => {
 		if (question) {
 			res.json(question);
 		} else {

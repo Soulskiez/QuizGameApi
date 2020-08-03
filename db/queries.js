@@ -4,8 +4,8 @@ module.exports = {
 	getAll(tableName) {
 		return knex(tableName);
 	},
-	getByName(name, tableName) {
-		return knex(tableName).where('name', name);
+	getById(id, tableName) {
+		return knex(tableName).where('id', id);
 	},
 	create(quiz, tableName) {
 		return knex(tableName).insert(quiz, '*');
