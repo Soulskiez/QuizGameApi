@@ -1,30 +1,31 @@
 const express = require('express');
 const app = express();
-const WebSocket = require('ws');
+const bodyParser = require('body-parser');
+const quizzes = require('./api/quiz');
+const questions = require('./api/question');
 
-const socketServer = new WebSocket.Server({ port: 3030 });
-const messages = [ 'Start Chatting!' ];
-socketServer.on('connection', (socketClient) => {
-	console.log('connected');
-	console.log('Number of clients: ', socketServer.clients.size);
-	socketClient.send(JSON.stringify(messages));
-
-	socketClient.on('message', (message) => {
-		messages.push(message);
-		socketServer.clients.forEach((client) => {
-			if (client.readyState === WebSocket.OPEN) {
-				client.send(JSON.stringify([ message ]));
-			}
-		});
-	});
-
-	socketClient.on('close', (socketClient) => {
-		console.log('closed');
-		console.log('Number of clients: ', socketServer.clients.size);
-	});
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/api/quizzes', quizzes);
+app.use('/api/questions', questions);
 
 const port = 8765;
+app.use(function(req, res, next) {
+	const err = new Error('Not Found');
+	err.status = 404;
+	next(err);
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+	res.status(err.status || 500);
+	res.json({
+		message: err.message,
+		error: req.app.get('env') === 'development' ? err : {}
+	});
+});
 app.listen(port, () => {
 	console.log(`listening http://localhost:${port}`);
 });
+
+module.export = app;
