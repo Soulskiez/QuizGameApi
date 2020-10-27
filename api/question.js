@@ -14,11 +14,21 @@ router.get('/', (req, res) => {
 		res.json(questions);
 	});
 });
-
+// get questions by quiz id TODO
 router.get('/:id', (req, res, next) => {
 	queries.getById(req.params.id, 'question').then((question) => {
 		if (question) {
 			res.json(question);
+		} else {
+			next();
+		}
+	});
+});
+
+router.get('/quizId/:id', (req, res, next) => {
+	queries.getByQuestionsByQuizId(req.params.id, 'question').then((questions) => {
+		if (questions) {
+			res.json(questions);
 		} else {
 			next();
 		}

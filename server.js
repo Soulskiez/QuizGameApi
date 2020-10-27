@@ -15,6 +15,8 @@ app.use(function(req, res, next) {
 	err.status = 404;
 	next(err);
 });
+// TODO: need better error handling, will test later, but had a random
+//  string in and sat in limbo, console had an error but nothing for on screen
 
 // error handler
 app.use(function(err, req, res, next) {
